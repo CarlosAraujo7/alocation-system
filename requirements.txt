@@ -1,0 +1,45 @@
+CREATE TABLE professores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cor VARCHAR(50) NOT NULL -- Cor associada ao professor
+);
+
+CREATE TABLE disciplinas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    carga_teorica INT NOT NULL, -- Carga horária teórica
+    carga_pratica INT NOT NULL, -- Carga horária prática
+    curso VARCHAR(255) NOT NULL, -- Curso ao qual a disciplina pertence
+    semestre INT NOT NULL, -- Semestre da disciplina
+    professor_id INT, -- Professor responsável
+    FOREIGN KEY (professor_id) REFERENCES professores(id)
+);
+
+CREATE TABLE horarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    dia_da_semana ENUM('Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta') NOT NULL,
+    hora_inicio TIME NOT NULL, -- Horário de início (ex: 08:00:00)
+    hora_fim TIME NOT NULL -- Horário de término (ex: 09:00:00)
+);
+
+CREATE TABLE laboratorios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL, -- Nome do laboratório (ex: Lab de Física)
+    capacidade INT NOT NULL -- Capacidade máxima
+);
+
+CREATE TABLE alocacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    professor_id INT NOT NULL, -- Professor responsável pela disciplina
+    disciplina_id INT NOT NULL, -- Disciplina alocada
+    horario_id INT NOT NULL, -- Horário da alocação
+    laboratorio_id INT, -- Laboratório utilizado (opcional)
+    curso VARCHAR(255) NOT NULL, -- Curso para a alocação
+    semestre INT NOT NULL, -- Semestre do curso
+    FOREIGN KEY (professor_id) REFERENCES professores(id),
+    FOREIGN KEY (disciplina_id) REFERENCES disciplinas(id),
+    FOREIGN KEY (horario_id) REFERENCES horarios(id),
+    FOREIGN KEY (laboratorio_id) REFERENCES laboratorios(id)
+);
+
+python -m flask run

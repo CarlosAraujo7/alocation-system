@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Disciplinas</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Lista de Disciplinas</h1>
+    {% if disciplinas %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Código</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for disciplina in disciplinas %}
+                <tr>
+                    <td>{{ disciplina.id }}</td>
+                    <td>{{ disciplina.nome }}</td>
+                    <td>{{ disciplina.codigo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhuma disciplina cadastrada.</p>
+    {% endif %}
+    <a href="/disciplinas/cadastro">Cadastrar Nova Disciplina</a> | 
+    <a href="/professores/listar">Ver Professores</a>
+</body>
+</html>

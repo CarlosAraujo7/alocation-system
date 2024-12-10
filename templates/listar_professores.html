@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Professores</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Lista de Professores</h1>
+    {% if professores %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Departamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for professor in professores %}
+                <tr>
+                    <td>{{ professor.id }}</td>
+                    <td>{{ professor.nome }}</td>
+                    <td>{{ professor.email }}</td>
+                    <td>{{ professor.departamento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum professor cadastrado.</p>
+    {% endif %}
+    <a href="/professores/cadastro">Cadastrar Novo Professor</a> | 
+    <a href="/disciplinas/listar">Ver Disciplinas</a>
+</body>
+</html>
