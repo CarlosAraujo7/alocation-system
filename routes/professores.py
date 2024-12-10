@@ -20,7 +20,7 @@ def cadastrar_professor():
             cursor.close()
             connection.close()
 
-        return redirect(url_for('professores.listar_professores'))  # Corrigir para 'professores.listar_professores'
+        return redirect(url_for('professores.listar_professores'))
     
     return render_template('cadastro_professor.html')
 

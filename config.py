@@ -12,9 +12,9 @@ def get_db_connection():
         return connection
     except mysql.connector.Error as error:
         if error.errno == errorcode.ER_BAD_DB_ERROR:
-            print("O banco de dados não existe!")
+            print("Sem banco de dados!")
         elif error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Usuário ou senha inválidos!")
         else:
-            print("Erro ao conectar ao banco de dados:", error)
+            print("Erro pra se conectar:", error)
         return None

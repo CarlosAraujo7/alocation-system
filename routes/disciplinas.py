@@ -26,7 +26,7 @@ def cadastrar_disciplina():
             cursor.close()
             connection.close()
 
-        return redirect(url_for('disciplinas.listar_disciplinas'))  # Corrigir para 'disciplinas.listar_disciplinas'
+        return redirect(url_for('disciplinas.listar_disciplinas'))
     
     return render_template('cadastro_disciplina.html')
 
