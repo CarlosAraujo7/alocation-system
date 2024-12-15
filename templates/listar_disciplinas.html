@@ -24,8 +24,8 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
                 <th>Curso</th>
+                <th>Nome</th>
                 <th>Semestre</th>
                 <th>Carga Teórica</th>
                 <th>Carga Prática</th>
@@ -37,8 +37,8 @@
             {% for disciplina in disciplinas %}
                 <tr>
                     <td>{{ disciplina['id'] }}</td>
-                    <td>{{ disciplina['nome'] }}</td>
                     <td>{{ disciplina['curso'] }}</td>
+                    <td>{{ disciplina['nome'] }}</td>
                     <td>{{ disciplina['semestre'] }}</td>
                     <td>{{ disciplina['carga_teorica'] }}</td>
                     <td>{{ disciplina['carga_pratica'] }}</td>

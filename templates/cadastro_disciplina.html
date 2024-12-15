@@ -4,6 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Disciplina</title>
+    <script>
+        function atualizarDisciplinas() {
+            // Obtém o valor selecionado do curso
+            var cursoSelecionado = document.getElementById('curso').value;
+            
+            // Objeto contendo as disciplinas por curso
+            var disciplinasPorCurso = {
+                "Engenharia Civil": ["Cálculo Fundamental", "Álgebra Linear", "Probabilidade e Estatística", 
+                "Física Fundamental", "Física Experimental para Engenharia", "Química Geral para Engenharia", 
+                "Programação Computacional e Introdução ao Cálculo Numérico", "Desenho para Engenharia", 
+                "Introdução à Engenharia", "Cálculo Vetorial Aplicado", "Eletromagnetismo", "Mecânica I", 
+                "Materiais de Construção Civil I", "Matemática Aplicada", "Geologia Geral e Mineralogia", 
+                "Mecânica II", "Materiais de Construção Civil II", "Topografia", "Eletrotécnica", 
+                "Física Ondulatória e de Partículas", "Métodos Numéricos", "Resistência dos Materiais I", 
+                "Projeto e Construção de Edifícios I", "Mecânica dos Fluidos", "Mecânica dos Solos I", 
+                "Fundamentos da Economia e Administração", "Geoprocessamento", "Resistência dos Materiais II", 
+                "Projeto e Construção de Edifícios II", "Mecânica dos Solos II", "Hidráulica Aplicada", 
+                "Análise e Planejamento de Sistemas de Transportes", "Engenharia Ambiental", "Análise de Estruturas I", 
+                "Estruturas de Concreto I", "Gerenciamento na Construção Civil I", "Higiene Industrial e Segurança do Trabalho", 
+                "Saneamento I", "Hidrologia", "Projeto e Construção da Infraestrutura Viária", "Análise de Estruturas II", 
+                "Estruturas de Concreto II", "Estruturas de Aço I", "Fundações", "Operação de Sistemas de Transportes", 
+                "Saneamento II", "Termodinâmica Aplicada", "Projeto e Construção da Superestrutura Viária", "Barragens", 
+                "Pontes I", "Engenharia Econômica", "Instalações Hidráulicas e Sanitárias Prediais", 
+                "Instalações Elétricas Prediais", "Ética e Legislação", "Atividade de Trabalho de Conclusão de Curso", 
+                "Atividades Complementares", "Estágio Curricular Supervisionado", "Álgebra Aplicada I", 
+                "Diferença e Enfrentamento Profissional Nas Desigualdades Sociais", "Português Instrumental", 
+                "Inglês Técnico", "Relações Étnico Raciais e Africanidades", "Educação em Direitos Humanos", 
+                "Educação Ambiental", "Alvenaria Estrutural", "Estruturas de Aço II", "Estruturas de Concreto Protendido", 
+                "Estruturas de Fundação", "Estruturas de Madeira", "Gerenciamento na Construção Civil II", 
+                "Gerenciamento da Produção na Construção Civil", "Patologia e Recuperação de Estruturas de Concreto", 
+                "Avaliações e Perícias de Engenharia", "Pontes-II", "Projeto Estrutural de Edifícios de Concreto", 
+                "Teoria da Elasticidade", "Concretos Especiais", "Gestão de Pavimentos", "Materiais Betuminosos", 
+                "Transportes Não Motorizados", "Planejamento Urbano e os Transportes", "Água Subterrânea", 
+                "Bombas e Estações Elevatórias", "Drenagem Urbana", "Gestão de Recursos Hídricos", "Mecânica das Rochas", 
+                "Obras de Contenção", "Gestão de Resíduos Sólidos", "Tratamento de Água e Esgoto", "Língua Brasileira de Sinais"
+                ]
+,
+                "Engenharia de Produção": ["Gestão da Produção", "Planejamento de Produção"],
+
+                "Engenharia de Software": ["Desenvolvimento de Software", "Arquitetura de Software"],
+
+                "Engenharia Mecânica": ["Termodinâmica", "Mecânica dos Fluidos"],
+                
+                "Ciência da Computação": ["Redes de Computadores", "Compiladores"]
+            };
+
+            // Obtém o campo de disciplinas
+            var disciplinaSelect = document.getElementById('nome');
+
+            // Limpa as opções existentes
+            disciplinaSelect.innerHTML = "";
+
+            // Adiciona a opção de selecionar
+            var optionDefault = document.createElement("option");
+            optionDefault.value = "";
+            optionDefault.text = "Selecione uma disciplina";
+            disciplinaSelect.appendChild(optionDefault);
+
+            // Adiciona as opções baseadas no curso selecionado
+            var disciplinas = disciplinasPorCurso[cursoSelecionado] || [];
+            disciplinas.forEach(function(disciplina) {
+                var option = document.createElement("option");
+                option.value = disciplina;
+                option.text = disciplina;
+                disciplinaSelect.appendChild(option);
+            });
+        }
+    </script>
 </head>
 <body>
     <h1>Cadastro de Disciplina</h1>
@@ -20,10 +88,13 @@
     
     <form method="POST">
         <label for="nome">Nome da Disciplina:</label>
-        <input type="text" id="nome" name="nome" required>
+        <select id="nome" name="nome" required>
+            <option value="">Selecione uma disciplina</option>
+        </select><br>
     
         <label for="curso">Curso:</label>
-        <select id="curso" name="curso" required>
+        <select id="curso" name="curso" onchange="atualizarDisciplinas()" required>
+            <option value="">Selecione um curso</option>
             <option value="Engenharia Civil">Engenharia Civil</option>
             <option value="Engenharia de Produção">Engenharia de Produção</option>
             <option value="Engenharia de Software">Engenharia de Software</option>
@@ -32,13 +103,36 @@
         </select><br>
     
         <label for="semestre">Semestre:</label>
-        <input type="number" id="semestre" name="semestre" required>
+        <select id="semestre" name="semestre" required>
+            <option value="1º">1º</option>
+            <option value="2º">2º</option>
+            <option value="3º">3º</option>
+            <option value="4º">4º</option>
+            <option value="5º">5º</option>
+            <option value="6º">6º</option>
+            <option value="7º">7º</option>
+            <option value="8º">8º</option>
+            <option value="9º">9º</option>
+            <option value="10º">10º</option>
+        </select><br>
     
         <label for="carga_teorica">Carga Horária Teórica:</label>
-        <input type="number" id="carga_teorica" name="carga_teorica" required>
+        <select id="carga_teorica" name="carga_teorica" required>
+            <option value="0 horas">0</option>
+            <option value="16 horas">16</option>
+            <option value="32 horas">32</option>
+            <option value="48 horas">48</option>
+            <option value="64 horas">64</option>
+        </select><br>
     
         <label for="carga_pratica">Carga Horária Prática:</label>
-        <input type="number" id="carga_pratica" name="carga_pratica" required>
+        <select id="carga_pratica" name="carga_pratica" required>
+            <option value="0 horas">0</option>
+            <option value="16 horas">16</option>
+            <option value="32 horas">32</option>
+            <option value="48 horas">48</option>
+            <option value="64 horas">64</option>
+        </select><br>
     
         <label for="professor_id">Professor:</label>
         <select id="professor_id" name="professor_id">

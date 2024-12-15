@@ -48,6 +48,10 @@ CREATE TABLE alocacoes (
 ALTER TABLE professores
 ADD COLUMN siape VARCHAR(20) NOT NULL;
 
+ALTER TABLE disciplinas MODIFY COLUMN semestre VARCHAR(255);
+ALTER TABLE disciplinas MODIFY COLUMN carga_teorica VARCHAR(255);
+ALTER TABLE disciplinas MODIFY COLUMN carga_pratica VARCHAR(255);
+
 python -m flask run
 
 table disciplina + carga horária de extensão

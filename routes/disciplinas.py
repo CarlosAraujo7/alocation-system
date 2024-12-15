@@ -61,47 +61,62 @@ def listar_disciplinas():
     return render_template('listar_disciplinas.html', disciplinas=disciplinas)
 
 # Rota para editar uma disciplina
-@disciplinas_bp.route('/editar/<int:id>', methods=['GET', 'POST'])
+# Rota para editar uma disciplina
+@disciplinas_bp.route('/editar_disciplina/<int:id>', methods=['GET', 'POST'])
 def editar_disciplina(id):
     connection = get_db_connection()
     disciplina = None
+    if connection:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM disciplinas WHERE id = %s", (id,))
+        disciplina = cursor.fetchone()
+        cursor.close()
+
+    if disciplina is None:
+        flash("Disciplina não encontrada!", "danger")
+        return redirect(url_for('disciplinas.listar_disciplinas'))
+
+    # Carregar professores para o formulário
     professores = []
     if connection:
         cursor = connection.cursor(dictionary=True)
-
-        # Recupera a disciplina para edição
-        cursor.execute("SELECT * FROM disciplinas WHERE id = %s", (id,))
-        disciplina = cursor.fetchone()
-
-        # Carregar todos os professores para o formulário
         cursor.execute("SELECT * FROM professores")
         professores = cursor.fetchall()
+        cursor.close()
 
-        if request.method == 'POST':
-            nome = request.form['nome']
-            curso = request.form['curso']
-            semestre = request.form['semestre']
-            carga_teorica = request.form['carga_teorica']
-            carga_pratica = request.form['carga_pratica']
-            professor_id = request.form.get('professor_id')  # Pode ser None para desassociar
+    if request.method == 'POST':
+        nome = request.form['nome']
+        curso = request.form['curso']
+        semestre = request.form['semestre']
+        carga_teorica = request.form['carga_teorica']
+        carga_pratica = request.form['carga_pratica']
+        professor_id = request.form.get('professor_id')  # Pode ser None (não selecionado)
 
+        # Atualiza os dados no banco
+        if connection:
+            cursor = connection.cursor()
             query = """
-            UPDATE disciplinas
+            UPDATE disciplinas 
             SET nome = %s, curso = %s, semestre = %s, carga_teorica = %s, carga_pratica = %s, professor_id = %s
             WHERE id = %s
             """
             cursor.execute(query, (nome, curso, semestre, carga_teorica, carga_pratica, professor_id or None, id))
             connection.commit()
             cursor.close()
-            connection.close()
 
-            flash("Disciplina editada com sucesso!", "success")
-            return redirect(url_for('disciplinas.listar_disciplinas'))
+        flash("Disciplina atualizada com sucesso!", "success")
+        return redirect(url_for('disciplinas.listar_disciplinas'))
 
-        cursor.close()
-        connection.close()
+    return render_template('editar_disciplina.html', 
+                           disciplina=disciplina,
+                           professores=professores,
+                           curso=disciplina['curso'],
+                           disciplina_selecionada=disciplina['nome'],
+                           semestre=disciplina['semestre'],
+                           carga_teorica=disciplina['carga_teorica'],
+                           carga_pratica=disciplina['carga_pratica'],
+                           professor_id=disciplina['professor_id'])
 
-    return render_template('editar_disciplina.html', disciplina=disciplina, professores=professores)
 
 # Rota para excluir disciplina
 @disciplinas_bp.route('/excluir/<int:id>', methods=['POST'])

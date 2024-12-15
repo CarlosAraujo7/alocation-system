@@ -3,11 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Disciplina</title>
+    <title>Edição de Disciplina</title>
+    <script>
+        function atualizarDisciplinas() {
+            // Obtém o valor selecionado do curso
+            var cursoSelecionado = document.getElementById('curso').value;
+            
+            // Objeto contendo as disciplinas por curso
+            var disciplinasPorCurso = {
+                "Engenharia Civil": ["Cimento 1", "Cimento 2"],
+                "Engenharia de Produção": ["Gestão da Produção", "Planejamento de Produção"],
+                "Engenharia de Software": ["Desenvolvimento de Software", "Arquitetura de Software"],
+                "Engenharia Mecânica": ["Termodinâmica", "Mecânica dos Fluidos"],
+                "Ciência da Computação": ["Redes de Computadores", "Compiladores"]
+            };
+
+            // Obtém o campo de disciplinas
+            var disciplinaSelect = document.getElementById('nome');
+
+            // Limpa as opções existentes
+            disciplinaSelect.innerHTML = "";
+
+            // Adiciona a opção de selecionar
+            var optionDefault = document.createElement("option");
+            optionDefault.value = "";
+            optionDefault.text = "Selecione uma disciplina";
+            disciplinaSelect.appendChild(optionDefault);
+
+            // Adiciona as opções baseadas no curso selecionado
+            var disciplinas = disciplinasPorCurso[cursoSelecionado] || [];
+            disciplinas.forEach(function(disciplina) {
+                var option = document.createElement("option");
+                option.value = disciplina;
+                option.text = disciplina;
+                disciplinaSelect.appendChild(option);
+            });
+        }
+
+        window.onload = function() {
+            // Ao carregar a página, chama a função para atualizar as disciplinas com o curso selecionado
+            var cursoSelecionado = document.getElementById('curso').value;
+            if (cursoSelecionado) {
+                atualizarDisciplinas();
+            }
+        };
+    </script>
 </head>
 <body>
-    <h1>Editar Disciplina</h1>
-
+    <h1>Edição de Disciplina</h1>
+    
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
@@ -20,31 +64,66 @@
     
     <form method="POST">
         <label for="nome">Nome da Disciplina:</label>
-        <input type="text" id="nome" name="nome" value="{{ disciplina['nome'] }}" required>
+        <select id="nome" name="nome" required>
+            <option value="">Selecione uma disciplina</option>
+            {% for disciplina in disciplinas %}
+                <option value="{{ disciplina }}" {% if disciplina == disciplina_selecionada %}selected{% endif %}>{{ disciplina }}</option>
+            {% endfor %}
+        </select><br>
     
         <label for="curso">Curso:</label>
-        <input type="text" id="curso" name="curso" value="{{ disciplina['curso'] }}" required>
+        <select id="curso" name="curso" onchange="atualizarDisciplinas()" required>
+            <option value="">Selecione um curso</option>
+            <option value="Engenharia Civil" {% if curso == 'Engenharia Civil' %}selected{% endif %}>Engenharia Civil</option>
+            <option value="Engenharia de Produção" {% if curso == 'Engenharia de Produção' %}selected{% endif %}>Engenharia de Produção</option>
+            <option value="Engenharia de Software" {% if curso == 'Engenharia de Software' %}selected{% endif %}>Engenharia de Software</option>
+            <option value="Engenharia Mecânica" {% if curso == 'Engenharia Mecânica' %}selected{% endif %}>Engenharia Mecânica</option>
+            <option value="Ciência da Computação" {% if curso == 'Ciência da Computação' %}selected{% endif %}>Ciência da Computação</option>
+        </select><br>
     
         <label for="semestre">Semestre:</label>
-        <input type="number" id="semestre" name="semestre" value="{{ disciplina['semestre'] }}" required>
+        <select id="semestre" name="semestre" required>
+            <option value="1º" {% if semestre == '1º' %}selected{% endif %}>1º</option>
+            <option value="2º" {% if semestre == '2º' %}selected{% endif %}>2º</option>
+            <option value="3º" {% if semestre == '3º' %}selected{% endif %}>3º</option>
+            <option value="4º" {% if semestre == '4º' %}selected{% endif %}>4º</option>
+            <option value="5º" {% if semestre == '5º' %}selected{% endif %}>5º</option>
+            <option value="6º" {% if semestre == '6º' %}selected{% endif %}>6º</option>
+            <option value="7º" {% if semestre == '7º' %}selected{% endif %}>7º</option>
+            <option value="8º" {% if semestre == '8º' %}selected{% endif %}>8º</option>
+            <option value="9º" {% if semestre == '9º' %}selected{% endif %}>9º</option>
+            <option value="10º" {% if semestre == '10º' %}selected{% endif %}>10º</option>
+        </select><br>
     
         <label for="carga_teorica">Carga Horária Teórica:</label>
-        <input type="number" id="carga_teorica" name="carga_teorica" value="{{ disciplina['carga_teorica'] }}" required>
+        <select id="carga_teorica" name="carga_teorica" required>
+            <option value="0 horas" {% if carga_teorica == '0 horas' %}selected{% endif %}>0</option>
+            <option value="16 horas" {% if carga_teorica == '16 horas' %}selected{% endif %}>16</option>
+            <option value="32 horas" {% if carga_teorica == '32 horas' %}selected{% endif %}>32</option>
+            <option value="48 horas" {% if carga_teorica == '48 horas' %}selected{% endif %}>48</option>
+            <option value="64 horas" {% if carga_teorica == '64 horas' %}selected{% endif %}>64</option>
+        </select><br>
     
         <label for="carga_pratica">Carga Horária Prática:</label>
-        <input type="number" id="carga_pratica" name="carga_pratica" value="{{ disciplina['carga_pratica'] }}" required>
+        <select id="carga_pratica" name="carga_pratica" required>
+            <option value="0 horas" {% if carga_pratica == '0 horas' %}selected{% endif %}>0</option>
+            <option value="16 horas" {% if carga_pratica == '16 horas' %}selected{% endif %}>16</option>
+            <option value="32 horas" {% if carga_pratica == '32 horas' %}selected{% endif %}>32</option>
+            <option value="48 horas" {% if carga_pratica == '48 horas' %}selected{% endif %}>48</option>
+            <option value="64 horas" {% if carga_pratica == '64 horas' %}selected{% endif %}>64</option>
+        </select><br>
     
         <label for="professor_id">Professor:</label>
         <select id="professor_id" name="professor_id">
-            <option value="" {% if not disciplina['professor_id'] %}selected{% endif %}>Nenhum professor atribuído</option>
+            <option value="" selected>Selecione um professor (opcional)</option>
             {% for professor in professores %}
-                <option value="{{ professor['id'] }}" {% if disciplina['professor_id'] == professor['id'] %}selected{% endif %}>{{ professor['nome'] }}</option>
+            <option value="{{ professor['id'] }}" {% if professor['id'] == professor_id %}selected{% endif %}>{{ professor['nome'] }}</option>
             {% endfor %}
         </select>
     
-        <button type="submit">Salvar alterações</button>
+        <button type="submit">Salvar</button>
     </form>
     
-    <a href="{{ url_for('disciplinas.listar_disciplinas') }}">Voltar</a>
+    <a href="{{ url_for('home') }}">Voltar</a>
 </body>
 </html>
