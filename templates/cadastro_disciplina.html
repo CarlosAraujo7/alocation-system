@@ -7,24 +7,50 @@
 </head>
 <body>
     <h1>Cadastro de Disciplina</h1>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
     <form method="POST">
-        <label for="nome">Nome:</label>
+        <label for="nome">Nome da Disciplina:</label>
         <input type="text" id="nome" name="nome" required>
-        
+    
         <label for="curso">Curso:</label>
-        <input type="text" id="curso" name="curso" required>
-        
+        <select id="curso" name="curso" required>
+            <option value="Engenharia Civil">Engenharia Civil</option>
+            <option value="Engenharia de Produção">Engenharia de Produção</option>
+            <option value="Engenharia de Software">Engenharia de Software</option>
+            <option value="Engenharia Mecânica">Engenharia Mecânica</option>
+            <option value="Ciência da Computação">Ciência da Computação</option>
+        </select><br>
+    
         <label for="semestre">Semestre:</label>
         <input type="number" id="semestre" name="semestre" required>
-        
+    
         <label for="carga_teorica">Carga Horária Teórica:</label>
         <input type="number" id="carga_teorica" name="carga_teorica" required>
-        
+    
         <label for="carga_pratica">Carga Horária Prática:</label>
         <input type="number" id="carga_pratica" name="carga_pratica" required>
-        
+    
+        <label for="professor_id">Professor:</label>
+        <select id="professor_id" name="professor_id">
+            <option value="" selected>Selecione um professor (opcional)</option>
+            {% for professor in professores %}
+            <option value="{{ professor['id'] }}">{{ professor['nome'] }}</option>
+            {% endfor %}
+        </select>
+    
         <button type="submit">Cadastrar</button>
     </form>
+    
     <a href="{{ url_for('home') }}">Voltar</a>
 </body>
 </html>

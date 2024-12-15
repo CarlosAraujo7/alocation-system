@@ -45,4 +45,14 @@ CREATE TABLE alocacoes (
     FOREIGN KEY (laboratorio_id) REFERENCES laboratorios(id)
 );
 
+ALTER TABLE professores
+ADD COLUMN siape VARCHAR(20) NOT NULL;
+
 python -m flask run
+
+table disciplina + carga horária de extensão
+disciplina/curso =  distinção
+
+4 laboratórios = 2: 25 máquinas, 1: 27 máquinas, 1: 24: máquinas
+
+

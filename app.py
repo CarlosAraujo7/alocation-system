@@ -4,7 +4,7 @@ from routes.professores import professores_bp
 from config import get_db_connection
 
 app = Flask(__name__)
-
+app.secret_key = 'admin'
 # Registra os Blueprints
 app.register_blueprint(disciplinas_bp, url_prefix='/disciplinas')
 app.register_blueprint(professores_bp, url_prefix='/professores')

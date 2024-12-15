@@ -3,34 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Disciplinas</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Listar Disciplinas</title>
 </head>
 <body>
-    <h1>Lista de Disciplinas</h1>
-    {% if disciplinas %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Código</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for disciplina in disciplinas %}
-                <tr>
-                    <td>{{ disciplina.id }}</td>
-                    <td>{{ disciplina.nome }}</td>
-                    <td>{{ disciplina.codigo }}</td>
-                </tr>
+    <h1>Listagem de Disciplinas</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
                 {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Nenhuma disciplina cadastrada.</p>
-    {% endif %}
-    <a href="/disciplinas/cadastro">Cadastrar Nova Disciplina</a> | 
-    <a href="/professores/listar">Ver Professores</a>
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
+    <a href="{{ url_for('disciplinas.cadastrar_disciplina') }}">Cadastrar nova disciplina</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Curso</th>
+                <th>Semestre</th>
+                <th>Carga Teórica</th>
+                <th>Carga Prática</th>
+                <th>Professor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for disciplina in disciplinas %}
+                <tr>
+                    <td>{{ disciplina['id'] }}</td>
+                    <td>{{ disciplina['nome'] }}</td>
+                    <td>{{ disciplina['curso'] }}</td>
+                    <td>{{ disciplina['semestre'] }}</td>
+                    <td>{{ disciplina['carga_teorica'] }}</td>
+                    <td>{{ disciplina['carga_pratica'] }}</td>
+                    <td>{{ disciplina['professor_nome'] if disciplina['professor_nome'] else 'Nenhum' }}</td>
+                    <td>
+                        <a href="{{ url_for('disciplinas.editar_disciplina', id=disciplina['id']) }}">Editar</a> |
+                        
+                        <!-- Formulário de exclusão -->
+                        <form action="{{ url_for('disciplinas.excluir_disciplina', id=disciplina['id']) }}" method="POST" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Tem certeza que deseja excluir esta disciplina?')">Excluir</button>
+                        </form>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('home') }}">Voltar</a>
 </body>
 </html>

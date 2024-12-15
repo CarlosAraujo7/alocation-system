@@ -1,0 +1,13 @@
+<h1>Editar Professor</h1>
+<form method="POST">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="{{ professor['nome'] }}" required>
+    <br>
+    <label for="cor">Cor (hexadecimal, ex: #FF5733):</label>
+    <input type="text" id="cor" name="cor" value="{{ professor['cor'] }}" required>
+    <br>
+    <label for="siape">SIAPE:</label>
+    <input type="text" id="siape" name="siape" value="{{ professor['siape'] }}" required>
+    <br>
+    <button type="submit">Salvar</button>
+</form>
