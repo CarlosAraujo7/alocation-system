@@ -87,11 +87,6 @@
     {% endwith %}
     
     <form method="POST">
-        <label for="nome">Nome da Disciplina:</label>
-        <select id="nome" name="nome" required>
-            <option value="">Selecione uma disciplina</option>
-        </select><br>
-    
         <label for="curso">Curso:</label>
         <select id="curso" name="curso" onchange="atualizarDisciplinas()" required>
             <option value="">Selecione um curso</option>
@@ -100,6 +95,11 @@
             <option value="Engenharia de Software">Engenharia de Software</option>
             <option value="Engenharia Mecânica">Engenharia Mecânica</option>
             <option value="Ciência da Computação">Ciência da Computação</option>
+        </select><br>
+        
+        <label for="nome">Nome da Disciplina:</label>
+        <select id="nome" name="nome" required>
+            <option value="">Selecione uma disciplina</option>
         </select><br>
     
         <label for="semestre">Semestre:</label>
