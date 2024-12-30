@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+</head>
+<body>
+    <h1>Cadastro de Usuário</h1>
+    
+    <!-- Formulário de cadastro -->
+    <form method="POST">
+        <label for="username">Usuário:</label>
+        <input type="text" name="username" required>
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha" required>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <!-- Link para voltar ao login -->
+    <p>Já tem uma conta? <a href="{{ url_for('autentificar_usuario.login') }}">Voltar para o Login</a></p>
+
+    <!-- Exibir mensagens de erro ou sucesso -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
