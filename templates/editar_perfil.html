@@ -1,0 +1,28 @@
+<h1>Editar Perfil</h1>
+
+<!-- Exibir mensagens de confirmação ou erro -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<!-- Formulário para editar o perfil -->
+<form method="POST">
+    <label for="username">Nome de Usuário:</label>
+    <input type="text" id="username" name="username" value="{{ usuario['username'] }}" required>
+    <br>
+    <label for="senha">Nova Senha (deixe em branco para manter a atual):</label>
+    <input type="password" id="senha" name="senha">
+    <br>
+    <button type="submit">Salvar</button>
+</form>
+
+<!-- Formulário para deletar o perfil -->
+<form action="{{ url_for('autentificar_usuario.deletar_perfil') }}" method="POST" onsubmit="return confirm('Você tem certeza que deseja excluir seu perfil?');">
+    <button type="submit" class="btn btn-danger">Deletar Perfil</button>
+</form>
